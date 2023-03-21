@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   # root "articles#index"
   # namespace :web do 
     resources :users
+    resources :clocked_time, only: %i(index create update) do
+      get :followee_sleep_timings, on: :collection
+    end
+    resources :followers
   # end
   
 end
