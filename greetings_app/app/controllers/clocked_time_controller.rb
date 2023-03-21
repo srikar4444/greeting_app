@@ -13,7 +13,23 @@ class ClockedTimeController < ApplicationController
     unless time.match?(TIME_REGEX)
       render json: {"errors" : "Time format is wrong"}, status: :unprocessable_entity
     end
-    @clocked_time = ClockedTime.create(time: time, action: action, user_id: current_user.id)
+
+    time_spent = 0
+    if action == 'sleep'
+      recent_activity = ClockedTime.where('time < ?', time ).order(time: :desc)
+      if recent_activity && recent_activity.action == 'awake'
+        time_spent = (time - recent_activity.time) / 1.minutes
+      end
+    elsif action == 'awake'
+      recent_activity = ClockedTime.where('time < ?', time ).order(time: :desc)
+      if recent_activity && recent_activity.action == 'sleep'
+        time_spent = (time - recent_activity.time) / 1.minutes
+      end
+    end
+
+    @clocked_time = ClockedTime.create(time: time, action: action, 
+                                       user_id: current_user.id,
+                                       time_spent: time_spent)
     if @clocked_time.save
       render json: @clocked_time, status: :created
     else
@@ -26,12 +42,27 @@ class ClockedTimeController < ApplicationController
     @clocked_time = ClockedTime.find_by(id: clocked_time_id)
     if @clocked_time
       # check to validate the time format
-      time = permitted_params[:time].to_datetime
+      time = permitted_params[:time]
       unless time.match?(TIME_REGEX)
         render json: {"errors" : "Time format is wrong"}, status: :unprocessable_entity
       end
+
+      time = permitted_params[:time].to_datetime
       action = permitted_params[:action]  
-      @clocked_time.update(time: time, action: action)
+      time_spent = 0
+      if action == 'sleep'
+        recent_activity = ClockedTime.where('time < ?', time ).order(time: :desc)
+        if recent_activity && recent_activity.action == 'awake'
+          time_spent = (time - recent_activity.time) / 1.minutes
+        end
+      elsif action == 'awake'
+        recent_activity = ClockedTime.where('time < ?', time ).order(time: :desc)
+        if recent_activity && recent_activity.action == 'sleep'
+          time_spent = (time - recent_activity.time) / 1.minutes
+        end
+      end
+
+      @clocked_time.update(time: time, action: action, time_spent: time_spent)
       render json: @clocked_time, status: :ok
     else
       render json: {}, status: :not_found
@@ -41,6 +72,7 @@ class ClockedTimeController < ApplicationController
   end
 
   def followee_sleep_timings
+    
     pass 
   end
 

@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_21_075234) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_21_131457) do
   create_table "clocked_times", force: :cascade do |t|
     t.datetime "time"
     t.string "action"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "time_spent"
     t.index ["user_id"], name: "index_clocked_times_on_user_id"
   end
 
