@@ -3,4 +3,14 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  # namespace :web do 
+    resources :users
+    resources :clocked_times, only: %i(index create) do
+      get :followee_sleep_timings, on: :collection
+    end
+    resources :followees, only: %i(index create) do
+      delete :delete_relation, on: :collection
+    end
+  # end
+  
 end
