@@ -41,6 +41,12 @@ Things you may want to cover:
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
+Install ruby mentioned version
+Install rails mentioned version
+Install bundler 
+Run "bundle install" command to install all gems. Required gems are present in Gemfile
+To run the rails server use the command "rails server"- This will run the server in the local url "http://127.0.0.1:3000/"
 
-* Link to postman collection
+
+* File greetings_app.postman_collection.json cotains the postman API collection
     ...
