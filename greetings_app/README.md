@@ -37,6 +37,8 @@ Things you may want to cover:
   The database is initialized when the project runs as it is an inbuilt database.
 
 * How to run the test suite
+  The test cases are to in the spec folder. 
+  bundle exec rspec ./spec/*file_name_in_spec_folder  to run particular test file
 
 * Services (job queues, cache servers, search engines, etc.)
 
