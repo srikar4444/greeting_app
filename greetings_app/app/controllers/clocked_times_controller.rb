@@ -73,8 +73,12 @@ class ClockedTimesController < ApplicationController
   # end
 
   def followee_sleep_timings
-    
-    
+    followee_user_ids = Follower.where(follower_id: current_user.id).pluck(:followee_id).uniq.compact
+    end_time = Time.zone.now
+    start_time = Time.zone.now - 7.days 
+    @followee_sleep_timings =  ClockedTime.where(user_id: followee_user_ids)
+                                          .where(action: 'awake').group(:user_id)
+                                          .select(:user_id).order('sum_time_spent desc').sum(:time_spent)
   end
 
   private
