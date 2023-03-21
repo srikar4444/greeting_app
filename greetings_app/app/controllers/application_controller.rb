@@ -1,5 +1,7 @@
+require 'pry'
 class ApplicationController < ActionController::API
   def current_user
+    # binding.pry
     if user_id > 0
       @current_user ||= User.find(user_id)
     else
@@ -9,6 +11,6 @@ class ApplicationController < ActionController::API
 
     private
       def user_id
-        request.headers['HTTP_USER_ID'].to_i
+        request.headers['HTTP-USER-ID'].to_i
       end
 end

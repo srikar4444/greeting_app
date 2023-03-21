@@ -5,10 +5,12 @@ Rails.application.routes.draw do
   # root "articles#index"
   # namespace :web do 
     resources :users
-    resources :clocked_time, only: %i(index create update) do
+    resources :clocked_times, only: %i(index create) do
       get :followee_sleep_timings, on: :collection
     end
-    resources :followers
+    resources :followees, only: %i(index create) do
+      delete :delete_relation, on: :collection
+    end
   # end
   
 end
