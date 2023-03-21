@@ -14,8 +14,10 @@ gem "puma", "~> 5.0"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-gem 'pry'
-
+gem "pry"
+gem "rspec", "~> 3.12.0"
+gem "rspec-rails", "~> 6.0.1"
+gem "rails_helper", "~> 2.2.2"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
