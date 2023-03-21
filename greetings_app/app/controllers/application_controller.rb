@@ -1,7 +1,6 @@
 require 'pry'
 class ApplicationController < ActionController::API
   def current_user
-    # binding.pry
     if user_id > 0
       @current_user ||= User.find(user_id)
     else

@@ -39,39 +39,6 @@ class ClockedTimesController < ApplicationController
     end
   end
 
-  # def update
-  #   clocked_time_id = permitted_params[:id]
-  #   @clocked_time = ClockedTime.find_by(id: clocked_time_id)
-  #   if @clocked_time
-  #     time = permitted_params[:time]
-  #     unless time.match?(TIME_REGEX)
-  #       render json: {"errors": "Time format is wrong"}, status: :unprocessable_entity
-  #     end
-
-  #     time = permitted_params[:time].to_datetime
-  #     action = permitted_params[:action]  
-  #     time_spent = 0
-  #     if action == 'sleep'
-  #       recent_activity = ClockedTime.where('time < ?', time ).order(time: :desc)
-  #       if recent_activity && recent_activity.action == 'awake'
-  #         time_spent = (time - recent_activity.time) / 1.minutes
-  #       end
-  #     elsif action == 'awake'
-  #       recent_activity = ClockedTime.where('time < ?', time ).order(time: :desc)
-  #       if recent_activity && recent_activity.action == 'sleep'
-  #         time_spent = (time - recent_activity.time) / 1.minutes
-  #       end
-  #     end
-
-  #     @clocked_time.update(time: time, action: action, time_spent: time_spent)
-  #     render json: @clocked_time, status: :ok
-  #   else
-  #     render json: {}, status: :not_found
-  #   end
-  #   time = permitted_params[:time]
-  #   action = permitted_params[:action]
-  # end
-
   def followee_sleep_timings
     followee_user_ids = Follower.where(follower_id: current_user.id).pluck(:followee_id).uniq.compact
     end_time = Time.zone.now
